@@ -1,0 +1,252 @@
+/* IPL AUCTION ARENA - Custom Styles & Stadium Animations */
+
+@import url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap');
+
+:root {
+  --primary-gold: #f59e0b;
+  --gold-glow: rgba(245, 158, 11, 0.4);
+  --ipl-blue: #1e3a8a;
+  --ipl-navy: #090d16;
+  --ipl-card-bg: rgba(15, 23, 42, 0.85);
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #060911;
+  color: #f8fafc;
+  overflow-x: hidden;
+}
+
+.font-heading {
+  font-family: 'Cabinet Grotesk', 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.font-mono-numeric {
+  font-family: 'JetBrains Mono', monospace;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}
+
+/* Stadium Spotlight Background Effect */
+.stadium-bg {
+  background-color: #050811;
+  background-image: 
+    radial-gradient(at 50% 0%, rgba(30, 58, 138, 0.35) 0px, transparent 60%),
+    radial-gradient(at 0% 100%, rgba(217, 119, 6, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.18) 0px, transparent 50%),
+    linear-gradient(to bottom, rgba(5, 8, 17, 0.9), rgba(5, 8, 17, 0.98)),
+    url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=2000&q=80');
+  background-size: cover, cover, cover, cover, cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+/* Glassmorphism Cards */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-gold {
+  background: linear-gradient(135deg, rgba(30, 27, 75, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.15);
+}
+
+/* Gold Glow animations */
+.glow-gold {
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.35);
+}
+
+.glow-blue {
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.35);
+}
+
+.glow-pulse {
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+    border-color: rgba(245, 158, 11, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(245, 158, 11, 0.7);
+    border-color: rgba(245, 158, 11, 0.9);
+  }
+}
+
+/* Active Bid Price Pop Animation */
+@keyframes bidBounce {
+  0% { transform: scale(0.92); opacity: 0.6; }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.bid-pop {
+  animation: bidBounce 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Hammer strike keyframes */
+@keyframes hammerHit {
+  0% { transform: rotate(0deg); }
+  35% { transform: rotate(-45deg); }
+  70% { transform: rotate(20deg); }
+  85% { transform: rotate(-10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.animate-hammer {
+  display: inline-block;
+  transform-origin: bottom right;
+  animation: hammerHit 0.6s ease-in-out;
+}
+
+/* SOLD / UNSOLD Stamp Animation */
+@keyframes stampIn {
+  0% {
+    opacity: 0;
+    transform: scale(3) rotate(-25deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.9) rotate(-12deg);
+  }
+  80% {
+    transform: scale(1.05) rotate(-12deg);
+  }
+  100% {
+    transform: scale(1) rotate(-12deg);
+  }
+}
+
+.sold-stamp {
+  border: 6px solid #10b981;
+  color: #10b981;
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+  animation: stampIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.unsold-stamp {
+  border: 6px solid #ef4444;
+  color: #ef4444;
+  text-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+  box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+  animation: stampIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.4);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 158, 11, 0.6);
+}
+
+/* Projector Mode High Contrast Styles */
+body.projector-mode {
+  font-size: 1.15rem;
+}
+
+body.projector-mode .projector-scale {
+  transform: scale(1.08);
+  transform-origin: top center;
+}
+
+body.projector-mode .text-projector-huge {
+  font-size: 4rem !important;
+  line-height: 1.1 !important;
+}
+
+body.projector-mode .glass-panel {
+  background: rgba(10, 16, 30, 0.95);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+}
+
+body.projector-mode .glass-panel-gold {
+  border: 2px solid #f59e0b;
+}
+
+/* Confetti canvas overlay */
+#confettiCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Marquee gradient badges */
+.tier-marquee {
+  background: linear-gradient(135deg, #f59e0b, #d97706, #b45309);
+  color: #000;
+  font-weight: 800;
+}
+
+.tier-platinum {
+  background: linear-gradient(135deg, #e2e8f0, #94a3b8, #64748b);
+  color: #000;
+  font-weight: 700;
+}
+
+.tier-gold {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #000;
+  font-weight: 700;
+}
+
+.tier-silver {
+  background: linear-gradient(135deg, #cbd5e1, #94a3b8);
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.tier-emerging {
+  background: linear-gradient(135deg, #38bdf8, #0284c7);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Team Card Hover transition */
+.team-card-hover {
+  transition: all 0.25s ease-in-out;
+}
+.team-card-hover:hover {
+  transform: translateY(-4px);
+}
+
+/* Shimmer animation for headers */
+.text-shimmer {
+  background: linear-gradient(90deg, #f59e0b 0%, #fff 50%, #f59e0b 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shine 4s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}

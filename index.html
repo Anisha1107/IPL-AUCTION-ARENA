@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPL AUCTION ARENA – Live Mega Auction Simulator 2026</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              gold: '#f59e0b',
+              goldLight: '#fbbf24',
+              navy: '#090d16',
+              card: '#0f172a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS Styles & Animations -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏏</text></svg>">
+</head>
+<body class="stadium-bg min-h-screen flex flex-col text-slate-100 antialiased selection:bg-amber-500 selection:text-slate-950">
+
+  <!-- Confetti Particle Canvas Overlay -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- Top Sticky Header -->
+  <header class="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 shadow-2xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo & Title -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="window.app.switchTab('home')">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-300 p-0.5 shadow-lg shadow-amber-500/20 flex items-center justify-center">
+          <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center text-xl">
+            🏏
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xl sm:text-2xl font-black tracking-tight font-heading text-slate-100">
+              IPL AUCTION <span class="text-amber-400">ARENA</span>
+            </span>
+            <span class="hidden sm:inline-block px-2 py-0.5 text-[10px] font-black uppercase tracking-widest rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              2026 EDITION
+            </span>
+          </div>
+          <div class="text-[11px] text-slate-400 font-semibold tracking-wide flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>College Symposium Live Mega Auction</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Pill in Header -->
+      <div id="headerQuickStats" class="hidden lg:block"></div>
+
+      <!-- Quick Controls (Sound, Projector Mode, Reset) -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        
+        <!-- Sound FX Toggle Button -->
+        <button id="btnToggleSound" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm" title="Toggle Sound Effects">
+          <span class="sound-icon">🔊</span>
+          <span class="sound-text hidden sm:inline">Sound ON</span>
+        </button>
+
+        <!-- Projector Mode Toggle Button -->
+        <button id="btnToggleProjector" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/40 text-xs font-bold flex items-center gap-1.5 transition shadow-sm" title="Toggle High-Visibility Projector Mode">
+          <span>📽️</span>
+          <span class="hidden sm:inline">Projector View</span>
+        </button>
+
+        <!-- Reset Button -->
+        <button id="btnResetAuction" class="p-2 rounded-xl bg-slate-900 hover:bg-rose-950/50 text-slate-400 hover:text-rose-300 border border-slate-800 hover:border-rose-500/40 text-xs transition" title="Reset Auction Data">
+          🔄
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs Bar -->
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800/60 overflow-x-auto scrollbar-none flex items-center gap-1 sm:gap-2 py-2 text-xs font-bold">
+      <button data-tab-target="home" class="px-3.5 py-1.5 rounded-xl border transition-all duration-150 flex items-center gap-2 shrink-0 bg-amber-500/20 text-amber-400 border-amber-500/50">
+        <span>🏠</span>
+        <span>Home</span>
+      </button>
+
+      <button data-tab-target="live-auction" class="px-3.5 py-1.5 rounded-xl border border-transparent text-slate-400 hover:bg-slate-800/50 transition-all duration-150 flex items-center gap-2 shrink-0">
+        <span class="text-amber-400 animate-pulse">🔨</span>
+        <span>Live Auction Podium</span>
+      </button>
+
+      <button data-tab-target="players" class="px-3.5 py-1.5 rounded-xl border border-transparent text-slate-400 hover:bg-slate-800/50 transition-all duration-150 flex items-center gap-2 shrink-0">
+        <span>👥</span>
+        <span>Player Database (200)</span>
+      </button>
+
+      <button data-tab-target="teams" class="px-3.5 py-1.5 rounded-xl border border-transparent text-slate-400 hover:bg-slate-800/50 transition-all duration-150 flex items-center gap-2 shrink-0">
+        <span>🛡️</span>
+        <span>10 Teams Hub</span>
+      </button>
+
+      <button data-tab-target="squads" class="px-3.5 py-1.5 rounded-xl border border-transparent text-slate-400 hover:bg-slate-800/50 transition-all duration-150 flex items-center gap-2 shrink-0">
+        <span>📊</span>
+        <span>Squads Breakdown</span>
+      </button>
+
+      <button data-tab-target="leaderboard" class="px-3.5 py-1.5 rounded-xl border border-transparent text-slate-400 hover:bg-slate-800/50 transition-all duration-150 flex items-center gap-2 shrink-0">
+        <span>🏆</span>
+        <span>Leaderboard & Stats</span>
+      </button>
+
+      <button data-tab-target="history" class="px-3.5 py-1.5 rounded-xl border border-transparent text-slate-400 hover:bg-slate-800/50 transition-all duration-150 flex items-center gap-2 shrink-0">
+        <span>📜</span>
+        <span>Auction Ledger</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Main View Area -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- 1. Home Section -->
+    <section id="section-home" class="tab-section"></section>
+
+    <!-- 2. Live Auction Stage Section -->
+    <section id="section-live-auction" class="tab-section hidden"></section>
+
+    <!-- 3. Player Database Section -->
+    <section id="section-players" class="tab-section hidden"></section>
+
+    <!-- 4. 10 Teams Hub Section -->
+    <section id="section-teams" class="tab-section hidden"></section>
+
+    <!-- 5. Squads Breakdown Section -->
+    <section id="section-squads" class="tab-section hidden"></section>
+
+    <!-- 6. Leaderboard Section -->
+    <section id="section-leaderboard" class="tab-section hidden"></section>
+
+    <!-- 7. History Section -->
+    <section id="section-history" class="tab-section hidden"></section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto border-t border-slate-800/80 bg-slate-950/60 backdrop-blur-md py-6 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2 text-slate-400">
+        <span class="text-amber-400 font-bold">IPL AUCTION ARENA</span>
+        <span>•</span>
+        <span>Designed for College Symposium Non-Technical Event</span>
+      </div>
+      <div>
+        <span>10 Teams • 200 Players • ₹120 Cr Budget • Real-Time Engine</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Overlays -->
+  <div id="soldCelebrationModal" class="hidden"></div>
+  <div id="detailsModal" class="hidden"></div>
+
+  <!-- Application Scripts in Dependency Order -->
+  <script src="js/teamsData.js"></script>
+  <script src="js/playersData.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/auctionEngine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
